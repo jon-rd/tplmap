@@ -3,7 +3,7 @@ from burp import ITab
 from javax.swing import JPanel, GroupLayout, JLabel, JComboBox, JCheckBox
 from java.awt import Dimension
 
-from core.checks import plugins
+from tplmap.core.checks import plugins
 
 class ConfigTab( ITab, JPanel ):
 

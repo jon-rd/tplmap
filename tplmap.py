@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-from utils import cliparser
-from core import checks
-from core.channel import Channel
-from utils.loggers import log
+from tplmap.utils import cliparser
+from tplmap.core import checks
+from tplmap.core.channel import Channel
+from tplmap.utils.loggers import log
 import traceback
 
 version = '0.5'

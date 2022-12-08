@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "tplmap"
+version = "0.5.1"
+description = "tplmap fork"
+authors = ["Jon Smith <jon@rebelliondefense.com>"]
+packages = [
+    { include = "tplmap" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+PyYAML = "*"
+requests = "*"
+
+[tool.poetry.dev-dependencies]
+black = "*"
+flake8 = "*"
+pytest = "*"
+isort = "*"
+autoflake = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
