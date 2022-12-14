@@ -14,7 +14,7 @@ class Java(Plugin):
                     "test_cmd": bash.printf % {"s1": rand.randstrings[2]},
                     "test_cmd_expected": rand.randstrings[2],
                     "test_os": """uname""",
-                    "test_os_expected": "^[\w-]+$",
+                    "test_os_expected": r"^[\w-]+$",
                 },
                 "read": {"call": "execute", "read": """base64<'%(path)s'"""},
                 "md5": {
@@ -44,9 +44,7 @@ class Java(Plugin):
         # the command execution action.
 
         test_cmd_code = self.actions.get("execute", {}).get("test_cmd")
-        test_cmd_code_expected = self.actions.get("execute", {}).get(
-            "test_cmd_expected"
-        )
+        test_cmd_code_expected = self.actions.get("execute", {}).get("test_cmd_expected")
 
         if (
             test_cmd_code
@@ -60,9 +58,7 @@ class Java(Plugin):
             self.set("reverse_shell", True)
 
             test_os_code = self.actions.get("execute", {}).get("test_os")
-            test_os_code_expected = self.actions.get("execute", {}).get(
-                "test_os_expected"
-            )
+            test_os_code_expected = self.actions.get("execute", {}).get("test_os_expected")
 
             if test_os_code and test_os_code_expected:
 
@@ -101,10 +97,7 @@ ctx_closures = {
         + closures.string
         + closures.var
         + closures.true_var,
-        closures.close_function
-        + closures.close_list
-        + closures.close_dict
-        + closures.empty,
+        closures.close_function + closures.close_list + closures.close_dict + closures.empty,
     ],
     4: [
         closures.close_single_duble_quotes
@@ -112,10 +105,7 @@ ctx_closures = {
         + closures.string
         + closures.var
         + closures.true_var,
-        closures.close_function
-        + closures.close_list
-        + closures.close_dict
-        + closures.empty,
+        closures.close_function + closures.close_list + closures.close_dict + closures.empty,
     ],
     5: [
         closures.close_single_duble_quotes
@@ -124,10 +114,7 @@ ctx_closures = {
         + closures.var
         + closures.true_var
         + closures.iterable_var,
-        closures.close_function
-        + closures.close_list
-        + closures.close_dict
-        + closures.empty,
+        closures.close_function + closures.close_list + closures.close_dict + closures.empty,
         closures.close_function + closures.close_list + closures.empty,
     ],
 }

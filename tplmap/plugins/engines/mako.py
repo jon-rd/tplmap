@@ -1,6 +1,4 @@
 from tplmap.plugins.languages import python
-from tplmap.utils import rand
-from tplmap.utils.loggers import log
 
 
 class Mako(python.Python):

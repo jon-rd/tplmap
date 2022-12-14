@@ -40,9 +40,7 @@ class TcpServer:
             try:
                 server.bind(("0.0.0.0", self.port))
             except socket.error as e:
-                log.error(
-                    "Port bind on 0.0.0.0:%s has failed: %s" % (self.port, str(e))
-                )
+                log.error("Port bind on 0.0.0.0:%s has failed: %s" % (self.port, str(e)))
                 return
 
             server.listen(1)
@@ -51,7 +49,7 @@ class TcpServer:
 
             try:
                 self.socket, address = server.accept()
-            except socket.timeout as e:
+            except socket.timeout:
                 server.close()
                 raise
 
@@ -86,5 +84,5 @@ class TcpServer:
                 c = sys.stdin.read(1)
                 if c == "":
                     return
-                if self.socket.sendall(c) != None:
+                if self.socket.sendall(c) is not None:
                     return

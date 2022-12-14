@@ -1,12 +1,6 @@
-import os
-import sys
 import unittest
 
-import requests
-
-sys.path.insert(1, os.path.join(sys.path[0], ".."))
-from basetest import EXTRA_DOWNLOAD, BaseTest
-
+from tests.basetest import EXTRA_DOWNLOAD, BaseTest
 from tplmap.core.channel import Channel
 from tplmap.core.checks import detect_template_injection
 from tplmap.plugins.engines.smarty import Smarty
@@ -44,9 +38,7 @@ class SmartyUnsecuredTest(unittest.TestCase, BaseTest):
     }
 
     url = "http://127.0.0.1:15002/smarty-3.1.32-unsecured.php?inj=*&tpl=%s"
-    url_blind = (
-        "http://127.0.0.1:15002/smarty-3.1.32-unsecured.php?inj=*&tpl=%s&blind=1"
-    )
+    url_blind = "http://127.0.0.1:15002/smarty-3.1.32-unsecured.php?inj=*&tpl=%s&blind=1"
     plugin = Smarty
 
     blind_tests = [

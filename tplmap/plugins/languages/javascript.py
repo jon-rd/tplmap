@@ -1,8 +1,6 @@
 from tplmap.core.plugin import Plugin
 from tplmap.plugins.languages import bash
 from tplmap.utils import closures, rand
-from tplmap.utils.loggers import log
-from tplmap.utils.strings import chunkit, md5, quote
 
 
 class Javascript(Plugin):
@@ -37,7 +35,7 @@ class Javascript(Plugin):
                     "call": "render",
                     "evaluate": """eval(Buffer('%(code_b64)s', 'base64').toString())""",
                     "test_os": """require('os').platform()""",
-                    "test_os_expected": "^[\w-]+$",
+                    "test_os_expected": r"^[\w-]+$",
                 },
                 "blind": {
                     "call": "execute_blind",
@@ -97,41 +95,20 @@ ctx_closures = {
         closures.close_function + closures.empty,
     ],
     2: [
-        closures.close_single_duble_quotes
-        + closures.integer
-        + closures.string
-        + closures.var,
+        closures.close_single_duble_quotes + closures.integer + closures.string + closures.var,
         closures.close_function + closures.empty,
     ],
     3: [
-        closures.close_single_duble_quotes
-        + closures.integer
-        + closures.string
-        + closures.var,
-        closures.close_function
-        + closures.close_list
-        + closures.close_dict
-        + closures.empty,
+        closures.close_single_duble_quotes + closures.integer + closures.string + closures.var,
+        closures.close_function + closures.close_list + closures.close_dict + closures.empty,
     ],
     4: [
-        closures.close_single_duble_quotes
-        + closures.integer
-        + closures.string
-        + closures.var,
-        closures.close_function
-        + closures.close_list
-        + closures.close_dict
-        + closures.empty,
+        closures.close_single_duble_quotes + closures.integer + closures.string + closures.var,
+        closures.close_function + closures.close_list + closures.close_dict + closures.empty,
     ],
     5: [
-        closures.close_single_duble_quotes
-        + closures.integer
-        + closures.string
-        + closures.var,
-        closures.close_function
-        + closures.close_list
-        + closures.close_dict
-        + closures.empty,
+        closures.close_single_duble_quotes + closures.integer + closures.string + closures.var,
+        closures.close_function + closures.close_list + closures.close_dict + closures.empty,
         closures.close_function + closures.close_list + closures.empty,
     ],
 }

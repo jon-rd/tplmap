@@ -70,12 +70,8 @@ target.add_option(
     help="Force usage of given HTTP method (e.g. PUT).",
 )
 
-request.add_option(
-    "-A", "--user-agent", dest="user_agent", help="HTTP User-Agent header value."
-)
-request.add_option(
-    "--proxy", dest="proxy", help="Use a proxy to connect to the target URL"
-)
+request.add_option("-A", "--user-agent", dest="user_agent", help="HTTP User-Agent header value.")
+request.add_option("--proxy", dest="proxy", help="Use a proxy to connect to the target URL")
 
 # Detection options
 detection = OptionGroup(
@@ -119,9 +115,7 @@ tplcmd.add_option(
     help="Prompt for an interactive shell " "on the template engine.",
 )
 
-tplcmd.add_option(
-    "--tpl-code", dest="tpl_code", help="Inject code in the template engine."
-)
+tplcmd.add_option("--tpl-code", dest="tpl_code", help="Inject code in the template engine.")
 
 # OS access options
 oscmd = OptionGroup(
@@ -139,9 +133,7 @@ oscmd.add_option(
     help="Prompt for an interactive operating " "system shell.",
 )
 
-oscmd.add_option(
-    "--upload", dest="upload", help="Upload LOCAL to REMOTE files.", nargs=2
-)
+oscmd.add_option("--upload", dest="upload", help="Upload LOCAL to REMOTE files.", nargs=2)
 
 oscmd.add_option(
     "--force-overwrite",
@@ -150,9 +142,7 @@ oscmd.add_option(
     help="Force file overwrite when uploading.",
 )
 
-oscmd.add_option(
-    "--download", dest="download", help="Download REMOTE to LOCAL files.", nargs=2
-)
+oscmd.add_option("--download", dest="download", help="Download REMOTE to LOCAL files.", nargs=2)
 
 oscmd.add_option(
     "--bind-shell",
@@ -211,9 +201,7 @@ def _(self, *args):
 
 
 parser.formatter._format_option_strings = parser.formatter.format_option_strings
-parser.formatter.format_option_strings = type(parser.formatter.format_option_strings)(
-    _, parser
-)
+parser.formatter.format_option_strings = type(parser.formatter.format_option_strings)(_, parser)
 
 option = parser.get_option("-h")
 option.help = option.help.capitalize().replace(

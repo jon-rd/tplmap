@@ -1,13 +1,6 @@
-import os
-import sys
 import unittest
 
-import requests
-
-sys.path.insert(1, os.path.join(sys.path[0], ".."))
-from basetest import BaseTest
-
-from tplmap.core.channel import Channel
+from tests.basetest import BaseTest
 from tplmap.plugins.engines.twig import Twig
 
 

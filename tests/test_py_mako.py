@@ -1,15 +1,8 @@
-import os
-import sys
 import unittest
 
-import requests
-
-sys.path.insert(10, os.path.join(sys.path[0], ".."))
-from basetest import BaseTest
-
+from tests.basetest import BaseTest
 from tplmap.core.channel import Channel
 from tplmap.plugins.engines.mako import Mako
-from tplmap.utils import rand, strings
 
 
 class MakoTest(unittest.TestCase, BaseTest):
@@ -188,8 +181,7 @@ class MakoTest(unittest.TestCase, BaseTest):
 
         channel = Channel(
             {
-                "url": "http://127.0.0.1:15001/limit/mako?tpl=%s&inj=*&limit=20"
-                % template,
+                "url": "http://127.0.0.1:15001/limit/mako?tpl=%s&inj=*&limit=20" % template,
                 "injection_tag": "*",
                 "technique": "R",
             }

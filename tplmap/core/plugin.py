@@ -6,7 +6,6 @@ import threading
 import time
 
 import tplmap.utils as utils
-import tplmap.utils.config
 from tplmap.utils import rand
 from tplmap.utils.loggers import log
 from tplmap.utils.strings import chunkit, md5
@@ -136,7 +135,7 @@ class Plugin(object):
             self._detect_render()
 
             # If render is not set, check unreliable render
-            if self.get("render") == None:
+            if self.get("render") is None:
                 self._detect_unreliable_render()
 
             # Else, print and execute rendered_detected()
@@ -198,7 +197,7 @@ class Plugin(object):
             force_level = self.channel.args.get("force_level")
             if (
                 force_level
-                and force_level[0] != None
+                and force_level[0] is not None
                 and ctx.get("level") != int(force_level[0])
             ):
                 continue
@@ -217,14 +216,10 @@ class Plugin(object):
                     "%s plugin is testing %s*%s code context escape with %i variations%s"
                     % (
                         self.plugin,
-                        repr(
-                            ctx.get("prefix", "%(closure)s") % ({"closure": ""})
-                        ).strip("'"),
+                        repr(ctx.get("prefix", "%(closure)s") % ({"closure": ""})).strip("'"),
                         repr(suffix).strip("'"),
                         len(closures),
-                        " (level %i)" % (ctx.get("level", 1))
-                        if self.get("level")
-                        else "",
+                        " (level %i)" % (ctx.get("level", 1)) if self.get("level") else "",
                     )
                 )
             else:
@@ -248,9 +243,7 @@ class Plugin(object):
             return
 
         # Print what it's going to be tested
-        log.debug(
-            "%s plugin is testing unreliable rendering on text context" % (self.plugin)
-        )
+        log.debug("%s plugin is testing unreliable rendering on text context" % (self.plugin))
 
         # Prepare base operation to be evalued server-side
         expected = render_action.get("test_render_expected")
@@ -436,13 +429,12 @@ class Plugin(object):
 
     """
     Inject the rendered payload and get the result.
-    
+
     The request is composed by parameters from:
-    
+
         - Already rendered passed **kwargs, or
         - self.get() to be rendered, or
         - self.actions.get() to be rendered
-        
     """
 
     def render(self, code, **kwargs):
@@ -456,9 +448,7 @@ class Plugin(object):
                 header_template = self.actions.get("render", {}).get("header")
 
             if header_template:
-                header_rand = kwargs.get(
-                    "header_rand", self.get("header_rand", rand.randint_n(10))
-                )
+                header_rand = kwargs.get("header_rand", self.get("header_rand", rand.randint_n(10)))
 
                 if "%(header)s" in header_template:
                     header = header_template % ({"header": header_rand})
@@ -508,9 +498,7 @@ class Plugin(object):
 
         # Save the average HTTP request time of rendering in order
         # to better tone the blind request timeouts.
-        result_raw = self.inject(
-            code=injection, prefix=prefix, suffix=suffix, blind=blind
-        )
+        result_raw = self.inject(code=injection, prefix=prefix, suffix=suffix, blind=blind)
 
         if blind:
             return result_raw
@@ -550,11 +538,7 @@ class Plugin(object):
 
             # If --force-level skip any other level
             force_level = self.channel.args.get("force_level")
-            if (
-                force_level
-                and force_level[1]
-                and ctx_closure_level != int(force_level[1])
-            ):
+            if force_level and force_level[1] and ctx_closure_level != int(force_level[1]):
                 continue
 
             # Skip any closure list which is above the required level
@@ -661,9 +645,7 @@ class Plugin(object):
                         "Blind upload might overwrite files, run with --force-overwrite to continue"
                     )
                 else:
-                    log.warn(
-                        "Remote file already exists, run with --force-overwrite to overwrite"
-                    )
+                    log.warn("Remote file already exists, run with --force-overwrite to overwrite")
                 return
             else:
                 execution_code = payload_truncate % ({"path": remote_path})
@@ -675,9 +657,7 @@ class Plugin(object):
             log.debug("[b64 encoding] %s" % chunk)
             chunk_b64 = base64.urlsafe_b64encode(chunk)
 
-            execution_code = payload_write % (
-                {"path": remote_path, "chunk_b64": chunk_b64}
-            )
+            execution_code = payload_write % ({"path": remote_path, "chunk_b64": chunk_b64})
             getattr(self, call_name)(code=execution_code)
 
         if self.get("blind"):
@@ -703,9 +683,7 @@ class Plugin(object):
 
         if "%(code_b64)s" in payload:
             log.debug("[b64 encoding] %s" % code)
-            execution_code = payload % (
-                {"code_b64": compatible_url_safe_base64_encode(code)}
-            )
+            execution_code = payload % ({"code_b64": compatible_url_safe_base64_encode(code)})
         else:
             execution_code = payload % ({"code": code})
 
@@ -729,9 +707,7 @@ class Plugin(object):
 
         if "%(code_b64)s" in payload:
             log.debug("[b64 encoding] %s" % code)
-            execution_code = payload % (
-                {"code_b64": compatible_url_safe_base64_encode(code)}
-            )
+            execution_code = payload % ({"code_b64": compatible_url_safe_base64_encode(code)})
         else:
             execution_code = payload % ({"code": code})
 
@@ -752,12 +728,7 @@ class Plugin(object):
         call_name = action.get("call", "inject")
 
         # Skip if something is missing or call function is not set
-        if (
-            not action
-            or not payload_action
-            or not call_name
-            or not hasattr(self, call_name)
-        ):
+        if not action or not payload_action or not call_name or not hasattr(self, call_name):
             return
 
         expected_delay = self._get_expected_delay()
@@ -788,12 +759,7 @@ class Plugin(object):
         call_name = action.get("call", "inject")
 
         # Skip if something is missing or call function is not set
-        if (
-            not action
-            or not payload_action
-            or not call_name
-            or not hasattr(self, call_name)
-        ):
+        if not action or not payload_action or not call_name or not hasattr(self, call_name):
             return
 
         expected_delay = self._get_expected_delay()
@@ -845,9 +811,7 @@ class Plugin(object):
                 }
             )
 
-            reqthread = threading.Thread(
-                target=getattr(self, call_name), args=(execution_code,)
-            )
+            reqthread = threading.Thread(target=getattr(self, call_name), args=(execution_code,))
             reqthread.start()
             yield reqthread
 
@@ -876,9 +840,7 @@ class Plugin(object):
                 }
             )
 
-            reqthread = threading.Thread(
-                target=getattr(self, call_name), args=(execution_code,)
-            )
+            reqthread = threading.Thread(target=getattr(self, call_name), args=(execution_code,))
             reqthread.start()
 
     def update_actions(self, actions):

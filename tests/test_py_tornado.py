@@ -1,15 +1,7 @@
-import os
-import sys
 import unittest
 
-import requests
-
-sys.path.insert(10, os.path.join(sys.path[0], ".."))
-from basetest import BaseTest
-
-from tplmap.core.channel import Channel
+from tests.basetest import BaseTest
 from tplmap.plugins.engines.tornado import Tornado
-from tplmap.utils import rand, strings
 
 
 class TornadoTest(unittest.TestCase, BaseTest):

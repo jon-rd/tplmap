@@ -1,13 +1,7 @@
-import os
-import sys
-
-import requests
-
-sys.path.insert(1, os.path.join(sys.path[0], ".."))
 import logging
+import os
 
 import tplmap.utils as utils
-import tplmap.utils.loggers
 from tplmap.core.channel import Channel
 from tplmap.core.checks import check_template_injection, detect_template_injection
 from tplmap.utils import rand, strings
@@ -45,9 +39,7 @@ class BaseTest(object):
 
     def test_detection(self):
 
-        channel = Channel(
-            {"url": self.url, "level": 5, "injection_tag": "*", "technique": "RT"}
-        )
+        channel = Channel({"url": self.url, "level": 5, "injection_tag": "*", "technique": "RT"})
         check_template_injection(channel)
 
         # Delete OS to make the tests portable

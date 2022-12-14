@@ -1,14 +1,6 @@
-import os
-import sys
 import unittest
 
-import requests
-
-sys.path.insert(1, os.path.join(sys.path[0], ".."))
-from basetest import EXTRA_DOWNLOAD, BaseTest
-
-from tplmap.core.channel import Channel
-from tplmap.core.checks import detect_template_injection
+from tests.basetest import EXTRA_DOWNLOAD, BaseTest
 from tplmap.plugins.languages.php import Php
 
 

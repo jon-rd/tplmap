@@ -1,7 +1,4 @@
 from tplmap.plugins.languages import javascript
-from tplmap.utils import rand
-from tplmap.utils.loggers import log
-from tplmap.utils.strings import quote
 
 
 class Marko(javascript.Javascript):

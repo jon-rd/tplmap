@@ -4,7 +4,6 @@ import os
 import sys
 
 import tplmap.utils as utils
-import tplmap.utils.config
 
 log = None
 logfile = None

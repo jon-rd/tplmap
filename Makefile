@@ -13,17 +13,26 @@ test:
 ## CHECK
 #
 #
-check: check_flake
+check: check_black check_flake check_isort
 
 check_flake:
 	poetry run flake8 ./tplmap ./tests
+
+check_black:
+	poetry run black --check ./tplmap ./tests
+
+check_isort:
+	poetry run isort ./tplmap ./tests --check-only
 
 ## FIX
 #
 #
 fix:
-	poetry run autoflake --in-place --remove-unused-variables --recursive ./tplmap ./tests
-	poetry run isort ./tplmap ./tests
-	poetry run black ./tplmap ./tests
+	poetry run autoflake --in-place --remove-unused-variables --recursive ./tplmap
+	poetry run isort ./tplmap
+	poetry run black ./tplmap
+	poetry run autoflake --in-place --remove-unused-variables --recursive ./tests
+	poetry run isort ./tests
+	poetry run black ./tests
 
 .PHONY: test check_flake fix

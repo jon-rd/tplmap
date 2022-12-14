@@ -1,7 +1,5 @@
 from tplmap.plugins.languages import java
 from tplmap.utils import rand
-from tplmap.utils.loggers import log
-from tplmap.utils.strings import quote
 
 
 class Velocity(java.Java):

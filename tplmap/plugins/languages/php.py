@@ -1,8 +1,6 @@
 from tplmap.core.plugin import Plugin
 from tplmap.plugins.languages import bash
 from tplmap.utils import closures, rand
-from tplmap.utils.loggers import log
-from tplmap.utils.strings import chunkit, md5, quote
 
 
 class Php(Plugin):
@@ -35,7 +33,7 @@ class Php(Plugin):
                     "call": "render",
                     "evaluate": """%(code)s""",
                     "test_os": "echo PHP_OS;",
-                    "test_os_expected": "^[\w-]+$",
+                    "test_os_expected": r"^[\w-]+$",
                 },
                 "execute": {
                     "call": "evaluate",
@@ -96,41 +94,20 @@ ctx_closures = {
         closures.close_function + closures.empty,
     ],
     2: [
-        closures.close_single_duble_quotes
-        + closures.integer
-        + closures.string
-        + closures.var,
+        closures.close_single_duble_quotes + closures.integer + closures.string + closures.var,
         closures.close_function + closures.empty,
     ],
     3: [
-        closures.close_single_duble_quotes
-        + closures.integer
-        + closures.string
-        + closures.var,
-        closures.close_function
-        + closures.close_list
-        + closures.close_dict
-        + closures.empty,
+        closures.close_single_duble_quotes + closures.integer + closures.string + closures.var,
+        closures.close_function + closures.close_list + closures.close_dict + closures.empty,
     ],
     4: [
-        closures.close_single_duble_quotes
-        + closures.integer
-        + closures.string
-        + closures.var,
-        closures.close_function
-        + closures.close_list
-        + closures.close_dict
-        + closures.empty,
+        closures.close_single_duble_quotes + closures.integer + closures.string + closures.var,
+        closures.close_function + closures.close_list + closures.close_dict + closures.empty,
     ],
     5: [
-        closures.close_single_duble_quotes
-        + closures.integer
-        + closures.string
-        + closures.var,
-        closures.close_function
-        + closures.close_list
-        + closures.close_dict
-        + closures.empty,
+        closures.close_single_duble_quotes + closures.integer + closures.string + closures.var,
+        closures.close_function + closures.close_list + closures.close_dict + closures.empty,
         closures.close_function + closures.close_list + closures.empty,
     ],
 }

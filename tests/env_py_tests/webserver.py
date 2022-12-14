@@ -1,18 +1,14 @@
-from flask import Flask, request
-
-app = Flask(__name__)
 import random
 import time
+from string import ascii_lowercase
 
 import tornado.template
+from flask import Flask, request
 from jinja2 import Environment as Jinja2Environment
 from mako.lookup import TemplateLookup
 from mako.template import Template as MakoTemplates
 
-try:
-    from string import lowercase as ascii_lowercase
-except ImportError:
-    from string import ascii_lowercase
+app = Flask(__name__)
 
 mylookup = TemplateLookup(directories=["/tpl"])
 
@@ -46,11 +42,7 @@ def reflect(engine):
             + randomword()
         )
     elif engine == "jinja2":
-        return (
-            randomword()
-            + Jinja2Env.from_string(template % injection).render()
-            + randomword()
-        )
+        return randomword() + Jinja2Env.from_string(template % injection).render() + randomword()
     elif engine == "eval":
         return randomword() + str(eval(template % injection)) + randomword()
     elif engine == "tornado":
@@ -75,11 +67,7 @@ def url_reflect(engine, injection):
             + randomword()
         )
     elif engine == "jinja2":
-        return (
-            randomword()
-            + Jinja2Env.from_string(template % injection).render()
-            + randomword()
-        )
+        return randomword() + Jinja2Env.from_string(template % injection).render() + randomword()
     elif engine == "eval":
         return randomword() + str(eval(template % injection)) + randomword()
     elif engine == "tornado":
@@ -106,11 +94,7 @@ def postfunc(engine):
             + randomword()
         )
     elif engine == "jinja2":
-        return (
-            randomword()
-            + Jinja2Env.from_string(template % injection).render()
-            + randomword()
-        )
+        return randomword() + Jinja2Env.from_string(template % injection).render() + randomword()
 
 
 @app.route("/header/<engine>")
@@ -129,11 +113,7 @@ def headerfunc(engine):
             + randomword()
         )
     elif engine == "jinja2":
-        return (
-            randomword()
-            + Jinja2Env.from_string(template % injection).render()
-            + randomword()
-        )
+        return randomword() + Jinja2Env.from_string(template % injection).render() + randomword()
 
 
 @app.route("/put/<engine>", methods=["PUT"])
@@ -151,11 +131,7 @@ def putfunc(engine):
             + randomword()
         )
     elif engine == "jinja2":
-        return (
-            randomword()
-            + Jinja2Env.from_string(template % injection).render()
-            + randomword()
-        )
+        return randomword() + Jinja2Env.from_string(template % injection).render() + randomword()
 
 
 @app.route("/limit/<engine>")
@@ -177,11 +153,7 @@ def limited(engine):
             + randomword()
         )
     elif engine == "jinja2":
-        return (
-            randomword()
-            + Jinja2Env.from_string(template % injection).render()
-            + randomword()
-        )
+        return randomword() + Jinja2Env.from_string(template % injection).render() + randomword()
 
 
 @app.route("/startswith/<engine>")
@@ -203,11 +175,7 @@ def startswithtest(engine):
             + randomword()
         )
     elif engine == "jinja2":
-        return (
-            randomword()
-            + Jinja2Env.from_string(template % injection).render()
-            + randomword()
-        )
+        return randomword() + Jinja2Env.from_string(template % injection).render() + randomword()
 
 
 @app.route("/blind/<engine>")
@@ -250,18 +218,12 @@ def reflect_cookieauth(engine):
             + randomword()
         )
     elif engine == "jinja2":
-        return (
-            randomword()
-            + Jinja2Env.from_string(template % injection).render()
-            + randomword()
-        )
+        return randomword() + Jinja2Env.from_string(template % injection).render() + randomword()
     elif engine == "eval":
         return randomword() + str(eval(template % injection)) + randomword()
     elif engine == "tornado":
         return (
-            randomword()
-            + tornado.template.Template(template % injection).generate()
-            + randomword()
+            randomword() + tornado.template.Template(template % injection).generate() + randomword()
         )
 
 

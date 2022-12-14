@@ -1,7 +1,6 @@
 from tplmap.plugins.languages import bash, javascript
 from tplmap.utils import rand
 from tplmap.utils.loggers import log
-from tplmap.utils.strings import chunkit, md5, quote
 
 
 class Dust(javascript.Javascript):
@@ -101,9 +100,7 @@ class Dust(javascript.Javascript):
 
             expected = rand_A + rand_B + rand_C
 
-            if expected in self.inject(
-                '%s{@if cond="1"}%s{/if}%s' % (rand_A, rand_B, rand_C)
-            ):
+            if expected in self.inject('%s{@if cond="1"}%s{/if}%s' % (rand_A, rand_B, rand_C)):
 
                 log.info(
                     "%s plugin has confirmed the presence of dustjs if helper <= 1.5.0"

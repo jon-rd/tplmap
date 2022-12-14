@@ -1,7 +1,5 @@
 from tplmap.plugins.languages import java
 from tplmap.utils import rand
-from tplmap.utils.loggers import log
-from tplmap.utils.strings import chunkit, md5, quote
 
 
 class Freemarker(java.Java):
