@@ -3,7 +3,8 @@ import logging.handlers
 import os
 import sys
 
-import utils.config
+import tplmap.utils as utils
+import tplmap.utils.config
 
 log = None
 logfile = None

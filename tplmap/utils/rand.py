@@ -1,6 +1,5 @@
 import random
 import string
-import sys
 
 
 def randint_n(n):
@@ -18,10 +17,7 @@ def randint_n(n):
     return random.randint(range_start, range_end)
 
 
-if sys.version_info.major > 2:
-    letters = string.ascii_letters
-else:
-    letters = string.letters
+letters = string.ascii_letters
 
 
 def randstr_n(n, chars=letters + string.digits):

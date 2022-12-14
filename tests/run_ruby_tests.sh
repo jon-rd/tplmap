@@ -22,10 +22,11 @@ docker run --rm --name $INSTANCE_NAME -p $PORT:$PORT -d $IMAGE_NAME
 
 # Wait until the http server is serving
 until $(curl --output /dev/null --silent --head http://localhost:$PORT/); do
+    echo "Waiting for rackup to complete..."
     sleep 1
 done
 
 # Launch ruby engines tests
-docker exec -it $INSTANCE_NAME python -m unittest discover -v . 'test_ruby_*.py'
+docker exec -it $INSTANCE_NAME python3 -m unittest discover -v . 'test_ruby_*.py'
 
 docker stop $INSTANCE_NAME

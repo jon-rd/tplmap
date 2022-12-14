@@ -1,7 +1,7 @@
-FROM node:10.12.0
+FROM node:19-bullseye
 
-RUN apt-get update && apt-get install --upgrade dnsutils python-pip libpython-dev -y
-RUN pip install requests PyYAML
+RUN apt-get update && apt-get install --upgrade dnsutils python3-pip libpython3-dev -y
+RUN pip3 install requests PyYAML
 
 COPY tests/env_node_tests/ /apps/tests/env_node_tests/
 

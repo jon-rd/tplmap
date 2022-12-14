@@ -1,7 +1,7 @@
-FROM php:7.2.10-apache
+FROM php:8.1-apache-bullseye
 
-RUN apt-get update && apt-get install --upgrade dnsutils python-pip -y
-RUN pip install requests PyYAML
+RUN apt-get update && apt-get install --upgrade dnsutils python3-pip python3.10 -y
+RUN pip3 install requests PyYAML
 
 RUN sed -i '0,/Listen [0-9]*/s//Listen 15002/' /etc/apache2/ports.conf
 

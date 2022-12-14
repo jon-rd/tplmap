@@ -29,6 +29,6 @@ until $(curl --output /dev/null --silent --head http://localhost:$PORT/); do
 done
 
 # Launch python engines tests
-docker exec -it $INSTANCE_NAME python2 -m unittest discover -v . 'test_py_*.py'
+docker exec -it $INSTANCE_NAME python3 -m unittest discover -v . 'test_py_*.py'
 
 docker stop $INSTANCE_NAME

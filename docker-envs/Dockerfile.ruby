@@ -1,8 +1,8 @@
-FROM ruby:2.5.1
+FROM ruby:3.1-bullseye
 
-RUN gem install slim tilt cuba rack
-RUN apt-get update && apt-get install --upgrade dnsutils python-pip -y
-RUN pip install requests PyYAML
+RUN gem install slim tilt cuba rack rackup
+RUN apt-get update && apt-get install --upgrade dnsutils python3-pip -y
+RUN pip3 install requests PyYAML
 
 COPY  . /apps/
 WORKDIR /apps/tests/

@@ -1,9 +1,9 @@
-FROM gradle:4.10.2-jdk8
+FROM gradle:7.6-jdk8
 
 USER root
 
-RUN apt-get update && apt-get install --upgrade dnsutils python-pip -y
-RUN pip install requests PyYAML
+RUN apt-get update && apt-get install --upgrade dnsutils python3-pip -y
+RUN pip3 install requests PyYAML
 
 COPY tests/env_java_tests/spark-app/ /apps/tests/env_java_tests/spark-app/
 WORKDIR /apps/tests/

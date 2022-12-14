@@ -1,5 +1,6 @@
-import sys
+import socket
 import telnetlib
+import urllib.parse as urlparse
 
 from tplmap.core.channel import Channel
 from tplmap.core.clis import MultilineShell, Shell
@@ -24,13 +25,6 @@ from tplmap.plugins.languages.php import Php
 from tplmap.plugins.languages.python import Python
 from tplmap.plugins.languages.ruby import Ruby
 from tplmap.utils.loggers import log
-
-if sys.version_info.major > 2:
-    import urllib.parse as urlparse
-else:
-    import urlparse
-
-import socket
 
 plugins = [
     Smarty,
@@ -126,12 +120,7 @@ def _print_injection_summary(channel):
 def detect_template_injection(channel, plugins=plugins):
 
     # Loop manually the channel.injs modifying channel's inj_idx
-    if sys.version_info.major >= 2:
-        wrappedRange = range
-    else:
-        wrappedRange = xrange
-
-    for i in wrappedRange(len(channel.injs)):
+    for _ in range(len(channel.injs)):
 
         log.info(
             "Testing if %s parameter '%s' is injectable"

@@ -7,8 +7,8 @@ import requests
 sys.path.insert(1, os.path.join(sys.path[0], ".."))
 import logging
 
-import utils.loggers
-
+import tplmap.utils as utils
+import tplmap.utils.loggers
 from tplmap.core.channel import Channel
 from tplmap.core.checks import detect_template_injection
 from tplmap.plugins.engines.mako import Mako

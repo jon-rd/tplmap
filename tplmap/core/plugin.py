@@ -2,12 +2,11 @@ import base64
 import collections
 import itertools
 import re
-import sys
 import threading
 import time
 
-import utils.config
-
+import tplmap.utils as utils
+import tplmap.utils.config
 from tplmap.utils import rand
 from tplmap.utils.loggers import log
 from tplmap.utils.strings import chunkit, md5
@@ -17,8 +16,8 @@ def _recursive_update(d, u):
     # Update value of a nested dictionary of varying depth
 
     for k, v in u.items():
-        if isinstance(d, collections.Mapping):
-            if isinstance(v, collections.Mapping):
+        if isinstance(d, collections.abc.Mapping):
+            if isinstance(v, collections.abc.Mapping):
                 r = _recursive_update(d.get(k, {}), v)
                 d[k] = r
             else:
@@ -29,16 +28,12 @@ def _recursive_update(d, u):
     return d
 
 
-def compatible_url_safe_base64_encode(input):
-    code_b64 = input
+def compatible_url_safe_base64_encode(str_input):
+    code_b64 = str_input
 
-    if sys.version_info.major >= 2:
-        code_b64 = code_b64.encode(encoding="UTF-8")
-
+    code_b64 = code_b64.encode(encoding="UTF-8")
     code_b64 = base64.urlsafe_b64encode(code_b64)
-
-    if sys.version_info.major >= 2:
-        code_b64 = code_b64.decode(encoding="UTF-8")
+    code_b64 = code_b64.decode(encoding="UTF-8")
 
     return code_b64
 
@@ -177,7 +172,6 @@ class Plugin(object):
 
             # Manage blind injection only if render detection has failed
             if not self.get("engine"):
-
                 self._detect_blind()
 
                 if self.get("blind"):
@@ -209,7 +203,7 @@ class Plugin(object):
             ):
                 continue
             # Skip any context which is above the required level
-            if not force_level and ctx.get("level") > self.channel.args.get("level"):
+            if not force_level and ctx.get("level") > self.channel.args.get("level", 0):
                 continue
 
             # The suffix is fixed
@@ -744,7 +738,8 @@ class Plugin(object):
         result = getattr(self, call_name)(
             code=execution_code, prefix=prefix, suffix=suffix, blind=blind
         )
-        return result.replace("\\n", "\n")
+
+        return str(result).replace("\\n", "\n")
 
     def evaluate_blind(self, code, **kwargs):
 

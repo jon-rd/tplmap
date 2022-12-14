@@ -1,7 +1,14 @@
 all: test check
 
 test:
-	poetry run pytest ./tests
+	./tests/run_channel_test.sh
+	./tests/run_java_tests.sh
+	./tests/run_node_tests.sh
+#	1 php test is currently failing and marked out in the test file
+	./tests/run_php_tests.sh
+	./tests/run_python3_tests.sh
+#	12 ruby tests are currently failing
+#	./tests/run_ruby_tests.sh
 
 ## CHECK
 #

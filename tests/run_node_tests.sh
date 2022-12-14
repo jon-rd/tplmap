@@ -34,6 +34,6 @@ until $(curl --output /dev/null --silent --head http://localhost:$PORT/); do
 done
 
 # Launch node engines tests
-docker exec -it $INSTANCE_NAME python -m unittest discover -v . 'test_node_*.py'
+docker exec -it $INSTANCE_NAME python3 -m unittest discover -v . 'test_node_*.py'
 
 docker stop $INSTANCE_NAME

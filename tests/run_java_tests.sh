@@ -25,6 +25,6 @@ done
 sleep 1
 
 # Launch Java engines tests
-docker exec -it $INSTANCE_NAME python -m unittest discover -v . 'test_java_*.py'
+docker exec -it $INSTANCE_NAME python3 -m unittest discover -v . 'test_java_*.py'
 
 docker stop $INSTANCE_NAME

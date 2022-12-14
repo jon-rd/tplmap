@@ -1,18 +1,12 @@
-import sys
+import urllib.parse as urlparse
+from copy import deepcopy
 
 import requests
 import urllib3
 
+import tplmap.utils as utils
+import tplmap.utils.config
 from tplmap.utils.loggers import log
-
-if sys.version_info.major > 2:
-    import urllib.parse as urlparse
-else:
-    import urlparse
-
-from copy import deepcopy
-
-import utils.config
 
 
 class Channel:
@@ -312,7 +306,7 @@ class Channel:
                 verify=False,
             ).text
         except requests.exceptions.ConnectionError as e:
-            if e and e[0] and e[0][0] == "Connection aborted.":
+            if "Connection aborted." in str(e):
                 log.info("Error: connection aborted, bad status line.")
                 result = None
             else:
